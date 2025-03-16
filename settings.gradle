@@ -1,0 +1,4 @@
+rootProject.name = 'otus_test_ms_2'
+include 'core-transfers'
+include 'limits'
+
