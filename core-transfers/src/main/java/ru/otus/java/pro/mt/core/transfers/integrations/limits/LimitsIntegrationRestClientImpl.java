@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import ru.otus.java.pro.mt.core.transfers.configs.properties.RestClientProperties;
 import ru.otus.java.pro.mt.core.transfers.dtos.RemainingLimitDto;
 import ru.otus.java.pro.mt.core.transfers.exceptions_handling.BusinessLogicException;
 
@@ -13,8 +14,10 @@ import ru.otus.java.pro.mt.core.transfers.exceptions_handling.BusinessLogicExcep
 @RequiredArgsConstructor
 @ConditionalOnMissingBean(RestTemplate.class)
 public class LimitsIntegrationRestClientImpl implements LimitsIntegration {
+
     private final RestClient limitsClient;
 
+    @Override
     public RemainingLimitDto getRemainingLimit(String clientId) {
         return limitsClient
                 .get()
