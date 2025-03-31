@@ -22,3 +22,14 @@ integrations:
     url: http://localhost:8182/api/v1/limits
     read-timeout: 30s
     write-timeout: 2s
+    connect-timeout: 2s
+rest-client:
+  services:
+    serviceA:
+      url: http://localhost:8083/api/v1/limits
+      read-timeout: 30s
+      connect-timeout: 2s
+    serviceB:
+      url: http://localhost:8081/api/v1/users
+      read-timeout: 20s
+      connect-timeout: 1s

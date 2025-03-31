@@ -14,11 +14,11 @@ public class CoreTransfersApplication {
 	5. Покройте openapi описанием все контроллеры и дто, которые используете
 	 */
 
-	// ----------------------------------------------------
-	// TODO Привести пример настройки 2х групп в Swagger
-	//
+    // ----------------------------------------------------
+    // TODO Привести пример настройки 2х групп в Swagger
+    //
 
-	public static void main(String[] args) {
-		SpringApplication.run(CoreTransfersApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CoreTransfersApplication.class, args);
+    }
 }

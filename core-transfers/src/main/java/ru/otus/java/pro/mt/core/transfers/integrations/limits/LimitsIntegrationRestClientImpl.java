@@ -1,20 +1,23 @@
 package ru.otus.java.pro.mt.core.transfers.integrations.limits;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 import ru.otus.java.pro.mt.core.transfers.dtos.RemainingLimitDto;
 import ru.otus.java.pro.mt.core.transfers.exceptions_handling.BusinessLogicException;
 
 @Component
-@RequiredArgsConstructor
-@ConditionalOnMissingBean(RestTemplate.class)
+//@ConditionalOnMissingBean(RestTemplate.class)
 public class LimitsIntegrationRestClientImpl implements LimitsIntegration {
+
     private final RestClient limitsClient;
 
+    public LimitsIntegrationRestClientImpl(@Qualifier("serviceA") RestClient limitsClient) {
+        this.limitsClient = limitsClient;
+    }
+
+    @Override
     public RemainingLimitDto getRemainingLimit(String clientId) {
         return limitsClient
                 .get()
