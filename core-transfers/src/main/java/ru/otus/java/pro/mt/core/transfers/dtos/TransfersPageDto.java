@@ -21,7 +21,4 @@ public final class TransfersPageDto {
     private List<TransferDto> entries;
 
 
-
-
-
 }

@@ -1,28 +1,35 @@
 package ru.otus.java.pro.mt.core.transfers.integrations.limits;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import ru.otus.java.pro.mt.core.transfers.configs.properties.RestClientProperties;
 
-@Configuration
+@Component
 public class RestClientFactory {
+    private final RestClientProperties properties;
 
-    @Bean
-    public RestClient restClient(RestClientProperties properties) {
+    @Autowired
+    public RestClientFactory(@Qualifier("restClientProperties") RestClientProperties properties) {
+        this.properties = properties;
+    }
+
+    public RestClient createRestClient(String serviceName) {
+        RestClientProperties.ServiceConfig config = properties.getServices().get(serviceName);
+        if (config == null) {
+            throw new IllegalArgumentException("No configuration found for service: " + serviceName);
+        }
+
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setConnectTimeout((int) config.getConnectTimeout().toMillis());
+        requestFactory.setReadTimeout((int) config.getReadTimeout().toMillis());
+
         return RestClient.builder()
-                .baseUrl(properties.getUrl())
-                .requestFactory(requestFactory(properties))
+                .baseUrl(config.getUrl())
+                .requestFactory(requestFactory)
                 .build();
     }
-
-    private ClientHttpRequestFactory requestFactory(RestClientProperties props) {
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(props.getConnectTimeout());
-        factory.setReadTimeout(props.getReadTimeout());
-        return factory;
-    }
-
 }

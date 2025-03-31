@@ -24,9 +24,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/transfers")
 @Tag(name = "Переводы", description = "Методы работы с переводами")
 public class TransfersController {
-    private final TransfersService transfersService;
-
     private static final Function<Transfer, TransferDto> ENTITY_TO_DTO = t -> new TransferDto(t.getId(), t.getClientId(), t.getTargetClientId(), t.getSourceAccount(), t.getTargetAccount(), t.getMessage(), t.getAmount());
+    private final TransfersService transfersService;
 
     @GetMapping
     @Operation(

@@ -1,11 +1,11 @@
 package ru.otus.java.pro.mt.limits.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.java.pro.mt.limits.dtos.RemainingLimitDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.math.BigDecimal;
 

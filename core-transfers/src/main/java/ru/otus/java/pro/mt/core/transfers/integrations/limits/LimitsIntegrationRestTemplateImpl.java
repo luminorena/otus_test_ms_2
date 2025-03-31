@@ -1,9 +1,11 @@
 package ru.otus.java.pro.mt.core.transfers.integrations.limits;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
@@ -25,11 +27,9 @@ public class LimitsIntegrationRestTemplateImpl implements LimitsIntegration {
 
     public RemainingLimitDto getRemainingLimit(String clientId) {
         try {
-//            RemainingLimitDto remainingLimit = commonRestTemplate
-//                    .getForObject(limitsIntegrationProperties.getUrl(), RemainingLimitDto.class);
             MultiValueMap<String, String> headers = new HttpHeaders();
             headers.put("client-id", List.of("1"));
-            RequestEntity<Void> re = new RequestEntity<>(headers,HttpMethod.GET, new URI(limitsIntegrationProperties.getUrl()));
+            RequestEntity<Void> re = new RequestEntity<>(headers, HttpMethod.GET, new URI(limitsIntegrationProperties.getUrl()));
             RemainingLimitDto remainingLimit = commonRestTemplate.exchange(re, RemainingLimitDto.class).getBody();
             return remainingLimit;
         } catch (HttpClientErrorException e) {
